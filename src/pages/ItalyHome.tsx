@@ -161,21 +161,21 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
             <div className="photo-card-vert">
               <div className="photo-wrapper">
                 <img 
-                  src="/sardynia/697993505.jpg" 
-                  alt="Prywatny balkon z widokiem na zachód słońca nad morzem" 
+                  src="/sardynia/balkon-widok-dzien.jpg" 
+                  alt="Prywatny balkon apartamentu z widokiem na morze i wybrzeże Isola Rossa" 
                   className="editorial-img" 
                   loading="lazy" 
                 />
               </div>
-              <h3 className="photo-caption-title">Prywatny Balkon & Zachód Słońca</h3>
-              <p className="photo-caption-desc">Panoramiczny widok na Zatokę Asinara, ciche dachy miasteczka i złote wieczorne światło.</p>
+              <h3 className="photo-caption-title">Prywatny Balkon & Widok na Morze</h3>
+              <p className="photo-caption-desc">Panoramiczny widok na Zatokę Asinara, dachy miasteczka i zachody słońca prosto z własnego tarasu.</p>
             </div>
 
             <div className="photo-card-vert">
               <div className="photo-wrapper">
                 <img 
-                  src="/sardynia/697993728.jpg" 
-                  alt="Jasny salon z antresolą sypialnianą i drewnianymi schodami" 
+                  src="/sardynia/salon-antresola-aktualny.jpg" 
+                  alt="Jasny salon z antresolą sypialnianą, drewnianymi schodami i wyjściem na balkon" 
                   className="editorial-img" 
                   loading="lazy" 
                 />
@@ -188,7 +188,7 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
               <div className="photo-wrapper">
                 <img 
                   src="/sardynia/697993552.jpg" 
-                  alt="Odkryty basen z widokiem na wzgórza Sardynii" 
+                  alt="Dwa odkryte baseny z widokiem na wzgórza Sardynii" 
                   className="editorial-img" 
                   loading="lazy" 
                 />
@@ -200,8 +200,8 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
             <div className="photo-card-vert">
               <div className="photo-wrapper">
                 <img 
-                  src="/sardynia/697993880.jpg" 
-                  alt="Lazurowe morze i zatoczki Isola Rossa" 
+                  src="/sardynia/697993823.jpg" 
+                  alt="Malownicza ścieżka nadmorska prowadząca na plaże i czerwone skały w okolicy Isola Rossa" 
                   className="editorial-img" 
                   loading="lazy" 
                 />
@@ -282,21 +282,21 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
 
               <div className="showcase-card">
                 <div className="showcase-img-wrap">
-                  <img src="/sardynia/697993847.jpg" alt="Komfortowa sypialnia przygotowana na przyjazd gości" className="showcase-img" loading="lazy" />
+                  <img src="/sardynia/antresola-sypialnia.jpg" alt="Jasna sypialnia na antresoli z łóżkiem małżeńskim i siatką żeglarską" className="showcase-img" loading="lazy" />
                 </div>
                 <div className="showcase-info">
                   <h4 className="showcase-title">Czystość i komfort 8,1/10</h4>
-                  <p className="showcase-desc">Wygodne łóżko małżeńskie, pachnąca pościel i relaksująca cisza z dala od wielkomiejskiego zgiełku.</p>
+                  <p className="showcase-desc">Wygodne łóżko małżeńskie na przestronnej antresoli, świeża pościel i relaksująca cisza z dala od zgiełku.</p>
                 </div>
               </div>
 
               <div className="showcase-card">
                 <div className="showcase-img-wrap">
-                  <img src="/sardynia/697993670.jpg" alt="Łazienka z bidetem, prysznicem i pralką" className="showcase-img" loading="lazy" />
+                  <img src="/sardynia/lazienka-aktualna.jpg" alt="Nowoczesna łazienka z prysznicem, bidetem i pralką" className="showcase-img" loading="lazy" />
                 </div>
                 <div className="showcase-info">
                   <h4 className="showcase-title">Łazienka z bidetem & pralka</h4>
-                  <p className="showcase-desc">Prysznic ze szklaną kabiną, bidet, toaleta, suszarka do włosów oraz prywatna pralka dla pełnej wygody.</p>
+                  <p className="showcase-desc">Prysznic z kabiną, bidet, toaleta, suszarka do włosów oraz prywatna pralka dla pełnej wygody.</p>
                 </div>
               </div>
 
@@ -322,11 +322,11 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
 
               <div className="showcase-card">
                 <div className="showcase-img-wrap">
-                  <img src="/sardynia/697993867.jpg" alt="Plaża La Marinedda" className="showcase-img" loading="lazy" />
+                  <img src="/sardynia/697993607.jpg" alt="Piaszczysta plaża z turkusową wodą na północy Sardynii" className="showcase-img" loading="lazy" />
                 </div>
                 <div className="showcase-info">
-                  <h4 className="showcase-title">Plaża La Marinedda (6 km)</h4>
-                  <p className="showcase-desc">Jedna z pereł północnej Sardynii z turkusową wodą i czerwonymi skałami, zaledwie 8 minut autem.</p>
+                  <h4 className="showcase-title">Piaszczyste plaże (5–6 km)</h4>
+                  <p className="showcase-desc">Krystaliczne zatoki Li Feruli, Badesi i La Marinedda z turkusową wodą, zaledwie 8 minut autem.</p>
                 </div>
               </div>
 
@@ -336,7 +336,7 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
         </div>
       </section>
 
-      {/* 4. AUTENTYCZNA INTERAKTYWNA GALERIA LIGHTBOX (54 ZDJĘCIA) */}
+      {/* 4. AUTENTYCZNA INTERAKTYWNA GALERIA LIGHTBOX */}
       <ItalyPhotoGallery />
 
       {/* 5. UDOGODNIENIA PEŁNA LISTA (1:1 Z BOOKING.COM) */}

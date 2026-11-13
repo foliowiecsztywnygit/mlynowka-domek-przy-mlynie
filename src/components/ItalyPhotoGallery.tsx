@@ -8,14 +8,27 @@ export const ItalyPhotoGallery: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  const countByCategory = (key: CategoryKey) =>
+    key === 'all'
+      ? italyGalleryPhotos.length
+      : italyGalleryPhotos.filter((p) => p.category === key).length;
+
+  const formatPhotoWord = (n: number) => {
+    const mod10 = n % 10;
+    const mod100 = n % 100;
+    if (n === 1) return 'zdjęcie';
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'zdjęcia';
+    return 'zdjęć';
+  };
+
   const categories: { key: CategoryKey; label: string }[] = [
-    { key: 'all', label: `Wszystkie zdjęcia (${italyGalleryPhotos.length})` },
-    { key: 'balkon', label: 'Taras & Zachód Słońca (13)' },
-    { key: 'wnetrze', label: 'Wnętrze & Antresola (13)' },
-    { key: 'kuchnia', label: 'Kuchnia & Jadalnia (8)' },
-    { key: 'lazienka', label: 'Łazienka (5)' },
-    { key: 'basen', label: 'Baseny & Relaks (5)' },
-    { key: 'okolica', label: 'Plaże & Okolica (10)' }
+    { key: 'all', label: `Wszystkie zdjęcia (${countByCategory('all')})` },
+    { key: 'balkon', label: `Taras & Zachód Słońca (${countByCategory('balkon')})` },
+    { key: 'wnetrze', label: `Wnętrze & Antresola (${countByCategory('wnetrze')})` },
+    { key: 'kuchnia', label: `Kuchnia & Jadalnia (${countByCategory('kuchnia')})` },
+    { key: 'lazienka', label: `Łazienka (${countByCategory('lazienka')})` },
+    { key: 'basen', label: `Baseny & Relaks (${countByCategory('basen')})` },
+    { key: 'okolica', label: `Plaże & Okolica (${countByCategory('okolica')})` }
   ];
 
   // Filtrowanie zdjęć
@@ -86,7 +99,7 @@ export const ItalyPhotoGallery: React.FC = () => {
         <div className="section-header-block text-center">
           <div className="sage-accent-line italy-accent-line"></div>
           <span className="section-eyebrow" style={{ color: '#C2633C' }}>
-            Autentyczna galeria fotograficzna (54 zdjęcia)
+            Autentyczna galeria fotograficzna ({italyGalleryPhotos.length} {formatPhotoWord(italyGalleryPhotos.length)})
           </span>
           <h2 className="section-title">Odkryj każdy zakątek Il Dolce Tramonto</h2>
           <p className="section-editorial-text" style={{ maxWidth: '780px', margin: '0 auto' }}>
