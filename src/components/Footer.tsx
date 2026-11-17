@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
             <h4 className="footer-col-header">BEZPOŚREDNI KONTAKT</h4>
             <ul className="footer-links-list">
               <li>Telefon: <a href="tel:+48791040091">+48 791 040 091</a></li>
-              <li>E-mail: <a href="mailto:dominika_f16_88@tlen.pl">dominika_f16_88@tlen.pl</a></li>
+              <li>E-mail: <a href="mailto:kontakt@pieniny-sardynia.pl">kontakt@pieniny-sardynia.pl</a></li>
               {isItaly ? (
                 <>
                   <li>Licencja (CIR): <strong>07038, IT090074C200015822</strong></li>

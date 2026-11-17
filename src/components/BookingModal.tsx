@@ -59,7 +59,16 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         )}
 
         <div className="modal-integration-info">
-          <p><strong>Bezpośrednia rezerwacja bez prowizji:</strong> Skontaktuj się z nami bezpośrednio telefonicznie lub przez WhatsApp, aby potwierdzić dostępność w najlepszej cenie:</p>
+          <p>
+            <strong>Bezpośrednia rezerwacja bez prowizji:</strong> Skontaktuj się z nami bezpośrednio telefonicznie, przez WhatsApp lub e-mail (
+            <a
+              href={`mailto:kontakt@pieniny-sardynia.pl?subject=${encodeURIComponent(title)}`}
+              style={{ color: accentColor, fontWeight: 600 }}
+            >
+              kontakt@pieniny-sardynia.pl
+            </a>
+            ), aby potwierdzić dostępność w najlepszej cenie:
+          </p>
         </div>
 
         <div className="modal-cta-buttons">

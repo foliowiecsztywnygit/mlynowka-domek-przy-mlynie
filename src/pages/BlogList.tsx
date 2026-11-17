@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllPosts } from '../lib/blog';
+import { BLOG_META } from '../data/seoRoutes';
+import { applyPageMeta } from '../lib/seo';
 
 export const BlogList: React.FC = () => {
   const posts = getAllPosts();
 
   useEffect(() => {
-    document.title = 'Blog & Przewodnik po Pieninach | Młynówka — Domek przy Młynie';
+    applyPageMeta(BLOG_META);
     window.scrollTo(0, 0);
-
-    // Dynamiczny opis meta
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute('content', 'Dziennik i przewodnik Młynówki w Krościenku nad Dunajcem. Odkryj szlaki w Pieninach, porady turystyczne i historię zabytkowego młyna.');
   }, []);
 
   return (

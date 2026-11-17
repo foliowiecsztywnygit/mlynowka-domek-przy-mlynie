@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { BookingBar } from '../components/BookingBar';
 import { ItalyPhotoGallery } from '../components/ItalyPhotoGallery';
+import { ITALY_META, SITE_URL } from '../data/seoRoutes';
+import { applyPageMeta } from '../lib/seo';
 
 interface ItalyHomeProps {
   onOpenBooking?: (data?: { checkIn?: string; checkOut?: string; property?: string }) => void;
 }
 
 export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
+  const location = useLocation();
   // Stan aktywnego FAQ
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    const canonicalUrl = location.pathname.startsWith('/sardynia') ? `${SITE_URL}/sardynia` : `${SITE_URL}/wlochy`;
+    applyPageMeta({ ...ITALY_META, url: canonicalUrl });
+  }, [location.pathname]);
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
@@ -636,7 +644,8 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
           <div className="contact-details-subtle" style={{ marginTop: '36px' }}>
             <p><strong>Il Dolce Tramonto Apartment</strong></p>
             <p>Via delle Poste FP3, 07038 Trinità d'Agultu e Vignola (SS), Sardynia, Włochy</p>
-            <p>Telefon: <a href="tel:+48791040091">+48 791 040 091</a> · Licencja CIR: IT090074C200015822</p>
+            <p>Telefon: <a href="tel:+48791040091">+48 791 040 091</a> · E-mail: <a href="mailto:kontakt@pieniny-sardynia.pl">kontakt@pieniny-sardynia.pl</a></p>
+            <p>Licencja CIR: IT090074C200015822</p>
           </div>
 
         </div>

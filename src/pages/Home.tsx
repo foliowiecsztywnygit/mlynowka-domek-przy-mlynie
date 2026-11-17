@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { BookingBar } from '../components/BookingBar';
 import { PhotoGallery } from '../components/PhotoGallery';
+import { MLYNOWKA_META, SITE_URL } from '../data/seoRoutes';
+import { applyPageMeta } from '../lib/seo';
 
 interface HomeProps {
   onOpenBooking?: (data?: { checkIn?: string; checkOut?: string; property?: string }) => void;
 }
 
 export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
+  const location = useLocation();
   // Stan FAQ
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    const canonicalUrl = location.pathname === '/pieniny' ? `${SITE_URL}/pieniny` : `${SITE_URL}/`;
+    applyPageMeta({ ...MLYNOWKA_META, url: canonicalUrl });
+  }, [location.pathname]);
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
@@ -418,7 +426,10 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
             <div className="banner-dash"></div>
             <h3 className="banner-title">Zapytaj o wolny termin w Młynówce</h3>
             <p className="banner-desc">
-              Baza wypadowa w Krościenku nad Dunajcem. Ogród, stary młyn i górski spokój. Skontaktuj się bezpośrednio z właścicielami domku.
+              Baza wypadowa w Krościenku nad Dunajcem. Ogród, stary młyn i górski spokój. Skontaktuj się bezpośrednio z właścicielami domku —{' '}
+              <a href="mailto:kontakt@pieniny-sardynia.pl" style={{ color: '#FFFFFF', textDecoration: 'underline' }}>
+                kontakt@pieniny-sardynia.pl
+              </a>.
             </p>
           </div>
           <div className="banner-actions-col">
@@ -446,7 +457,10 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
             <BookingBar onOpenBooking={handleBookingTrigger} />
           </div>
 
-          <p className="booking-sub-note">Obsługa kart płatniczych Visa / Mastercard · Natychmiastowe potwierdzenie</p>
+          <p className="booking-sub-note">
+            Obsługa kart płatniczych Visa / Mastercard · Natychmiastowe potwierdzenie · E-mail:{' '}
+            <a href="mailto:kontakt@pieniny-sardynia.pl">kontakt@pieniny-sardynia.pl</a>
+          </p>
         </div>
       </section>
 

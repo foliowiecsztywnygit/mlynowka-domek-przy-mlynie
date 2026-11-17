@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getPostBySlug } from '../lib/blog';
+import { MLYNOWKA_META, SITE_URL } from '../data/seoRoutes';
+import { applyPageMeta } from '../lib/seo';
 
 interface BlogPostProps {
   onOpenBooking?: () => void;
@@ -18,16 +20,17 @@ export const BlogPost: React.FC<BlogPostProps> = ({ onOpenBooking }) => {
     window.scrollTo(0, 0);
 
     if (post) {
-      // Dynamiczny Title & Meta Description
-      document.title = `${post.title} | Blog Młynówka Domek przy Młynie`;
-
-      let metaDesc = document.querySelector('meta[name="description"]');
-      if (!metaDesc) {
-        metaDesc = document.createElement('meta');
-        metaDesc.setAttribute('name', 'description');
-        document.head.appendChild(metaDesc);
-      }
-      metaDesc.setAttribute('content', post.description || post.title);
+      applyPageMeta({
+        title: `${post.title} | Blog Młynówka Domek przy Młynie`,
+        description: post.description || post.title,
+        siteName: MLYNOWKA_META.siteName,
+        url: `${SITE_URL}/blog/${post.slug}`,
+        image: MLYNOWKA_META.image,
+        imageWidth: MLYNOWKA_META.imageWidth,
+        imageHeight: MLYNOWKA_META.imageHeight,
+        imageAlt: post.title,
+        type: 'article',
+      });
 
       // Schema.org BlogPosting JSON-LD
       const scriptId = 'blog-posting-schema';
