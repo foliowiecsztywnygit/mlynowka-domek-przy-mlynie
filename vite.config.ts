@@ -150,15 +150,25 @@ function generateRouteMetaHtml(): Plugin {
       for (const { routePath, meta } of staticRoutes) {
         const html = renderHtmlWithMeta(baseHtml, meta);
 
-        // Write <route>/index.html for directory/trailing-slash servers (Nginx, GitHub Pages, Vercel)
-        const dirTarget = path.join(distPath, routePath);
-        fs.mkdirSync(dirTarget, { recursive: true });
-        fs.writeFileSync(path.join(dirTarget, 'index.html'), html, 'utf-8');
+        // Write <route>.html for extensionless HTML servers (Cloudflare Pages, Netlify, Caddy {path}.html)
+        const htmlFileTarget = path.join(distPath, `${routePath}.html`);
+        fs.mkdirSync(path.dirname(htmlFileTarget), { recursive: true });
+        fs.writeFileSync(htmlFileTarget, html, 'utf-8');
 
-        // Write <route>.html for extensionless HTML servers (Cloudflare Pages, Netlify)
-        const fileTarget = path.join(distPath, `${routePath}.html`);
-        fs.mkdirSync(path.dirname(fileTarget), { recursive: true });
-        fs.writeFileSync(fileTarget, html, 'utf-8');
+        const routeTarget = path.join(distPath, routePath);
+        const hasChildRoutes = staticRoutes.some((r) => r.routePath.startsWith(`${routePath}/`));
+        const isExistingDir = fs.existsSync(routeTarget) && fs.statSync(routeTarget).isDirectory();
+
+        if (isExistingDir || hasChildRoutes) {
+          // Directory exists (e.g. public/sardynia assets or blog/* child routes) -> write <route>/index.html
+          fs.mkdirSync(routeTarget, { recursive: true });
+          fs.writeFileSync(path.join(routeTarget, 'index.html'), html, 'utf-8');
+        } else {
+          // Write extensionless file <route> directly so servers with `try_files {path} /index.html` (like Coolify Caddy)
+          // match `{path}` (e.g. /wlochy, /pieniny, /blog/<slug>) as a file with content-type text/html!
+          fs.mkdirSync(path.dirname(routeTarget), { recursive: true });
+          fs.writeFileSync(routeTarget, html, 'utf-8');
+        }
       }
     },
   };
