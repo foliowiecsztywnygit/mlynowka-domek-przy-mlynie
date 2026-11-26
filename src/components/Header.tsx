@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getBookingUrl } from '../data/bookingLinks';
 
 interface HeaderProps {
   onOpenBooking?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
 
   const isItaly = location.pathname.startsWith('/wlochy') || location.pathname.startsWith('/sardynia');
+  const bookingUrl = getBookingUrl(isItaly);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,21 +27,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
   useEffect(() => {
     setDrawerOpen(false);
   }, [location.pathname]);
-
-  const triggerBooking = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const propertyTitle = isItaly 
-      ? 'Il Dolce Tramonto Apartment — Sardynia' 
-      : 'Młynówka Domek przy Młynie';
-
-    if (onOpenBooking) {
-      onOpenBooking();
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: { property: propertyTitle }
-      }));
-    }
-  };
 
   return (
     <>
@@ -100,15 +87,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
 
           {/* PRAWA STRONA: PRZYCISK REZERWACJI I HAMBURGER */}
           <div className="header-right-tools">
-            <button 
-              type="button" 
+            <a 
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`btn-header-cta ${isItaly ? 'btn-italy' : ''}`} 
-              onClick={triggerBooking}
               data-booking-trigger="true"
               style={isItaly ? { background: '#C2633C', borderColor: '#C2633C' } : {}}
             >
               ZAREZERWUJ POBYT
-            </button>
+            </a>
             <button 
               type="button" 
               className="hamburger-btn" 
@@ -162,15 +150,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenBooking }) => {
               )}
             </nav>
             <div className="drawer-footer">
-              <button 
-                type="button" 
+              <a 
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`btn-sage btn-block ${isItaly ? 'btn-italy' : ''}`} 
-                onClick={(e) => { setDrawerOpen(false); triggerBooking(e); }}
+                onClick={() => setDrawerOpen(false)}
                 data-booking-trigger="true"
                 style={isItaly ? { background: '#C2633C', borderColor: '#C2633C' } : {}}
               >
                 SPRAWDŹ DOSTĘPNOŚĆ
-              </button>
+              </a>
               <a href="tel:+48791040091" className="drawer-phone">Zadzwoń: +48 791 040 091</a>
             </div>
           </div>

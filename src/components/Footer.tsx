@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { getBookingUrl } from '../data/bookingLinks';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
   const isItaly = location.pathname.startsWith('/wlochy') || location.pathname.startsWith('/sardynia');
+  const bookingUrl = getBookingUrl(isItaly);
 
   return (
     <footer className="ukoi-footer">
@@ -172,13 +174,13 @@ export const Footer: React.FC = () => {
                 <span>·</span>
                 <a href="#galeria">Galeria</a>
                 <span>·</span>
-                <a href="#kontakt">Rezerwacja online</a>
+                <a href={bookingUrl} target="_blank" rel="noopener noreferrer">Rezerwacja online</a>
               </>
             ) : (
               <>
                 <Link to="/blog">Blog</Link>
                 <span>·</span>
-                <a href="#rezerwacja" data-booking-trigger="true">Rezerwacja online</a>
+                <a href={bookingUrl} target="_blank" rel="noopener noreferrer" data-booking-trigger="true">Rezerwacja online</a>
               </>
             )}
           </div>

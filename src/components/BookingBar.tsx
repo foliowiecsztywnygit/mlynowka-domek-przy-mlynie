@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { getBookingUrl } from '../data/bookingLinks';
 
 interface BookingBarProps {
   onOpenBooking?: () => void;
+  property?: 'pieniny' | 'italy';
 }
 
 interface DateItem {
   year: number;
-  month: number; // 0-indexed (9 = Październik)
+  month: number; // 0-indexed
   day: number;
 }
 
@@ -17,17 +20,41 @@ const POLISH_MONTHS_FULL = [
   'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
 ];
 
-export const BookingBar: React.FC<BookingBarProps> = ({ onOpenBooking }) => {
-  // Domyślne daty: 15 Paź 2026 i 16 Paź 2026
-  const [checkIn, setCheckIn] = useState<DateItem>({ year: 2026, month: 9, day: 15 });
-  const [checkOut, setCheckOut] = useState<DateItem>({ year: 2026, month: 9, day: 16 });
+function toDateItem(date: Date): DateItem {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate(),
+  };
+}
+
+function formatIsoDate(date: DateItem): string {
+  const m = String(date.month + 1).padStart(2, '0');
+  const d = String(date.day).padStart(2, '0');
+  return `${date.year}-${m}-${d}`;
+}
+
+export const BookingBar: React.FC<BookingBarProps> = ({ property }) => {
+  const location = useLocation();
+  const isItaly =
+    property === 'italy' ||
+    (property === undefined &&
+      (location.pathname.startsWith('/wlochy') || location.pathname.startsWith('/sardynia')));
+
+  // Domyślne daty: dzisiaj i jutro
+  const [checkIn, setCheckIn] = useState<DateItem>(() => toDateItem(new Date()));
+  const [checkOut, setCheckOut] = useState<DateItem>(() => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return toDateItem(tomorrow);
+  });
 
   // Stan otwarcia: 'in' = mini-kalendarzyk 1, 'out' = mini-kalendarzyk 2, null = zamknięte
   const [openCalendar, setOpenCalendar] = useState<'in' | 'out' | null>(null);
 
   // Widok miesiąca dla kalendarza przyjazdu i wyjazdu
-  const [inView, setInView] = useState({ year: 2026, month: 9 });
-  const [outView, setOutView] = useState({ year: 2026, month: 9 });
+  const [inView, setInView] = useState(() => ({ year: checkIn.year, month: checkIn.month }));
+  const [outView, setOutView] = useState(() => ({ year: checkOut.year, month: checkOut.month }));
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -98,16 +125,11 @@ export const BookingBar: React.FC<BookingBarProps> = ({ onOpenBooking }) => {
   const handleSearchClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setOpenCalendar(null);
-    if (onOpenBooking) {
-      onOpenBooking();
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: { 
-          property: 'Młynówka — Domek przy Młynie',
-          dates: `${checkIn.day} ${POLISH_MONTHS_SHORT[checkIn.month]} – ${checkOut.day} ${POLISH_MONTHS_SHORT[checkOut.month]} ${checkOut.year}`
-        }
-      }));
-    }
+    const bookingUrl = getBookingUrl(isItaly, {
+      checkIn: formatIsoDate(checkIn),
+      checkOut: formatIsoDate(checkOut),
+    });
+    window.open(bookingUrl, '_blank', 'noopener,noreferrer');
   };
 
   // Generowanie siatki dni z dniami wypełniającymi (poniedziałek - niedziela)

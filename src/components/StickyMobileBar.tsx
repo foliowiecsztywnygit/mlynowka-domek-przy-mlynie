@@ -1,28 +1,15 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { getBookingUrl } from '../data/bookingLinks';
 
 interface StickyMobileBarProps {
   onOpenBooking?: () => void;
 }
 
-export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({ onOpenBooking }) => {
+export const StickyMobileBar: React.FC<StickyMobileBarProps> = () => {
   const location = useLocation();
   const isItaly = location.pathname.startsWith('/wlochy') || location.pathname.startsWith('/sardynia');
-
-  const triggerBooking = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onOpenBooking) {
-      onOpenBooking();
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: {
-          property: isItaly
-            ? 'Il Dolce Tramonto Apartment — Sardynia'
-            : 'Młynówka Domek przy Młynie'
-        }
-      }));
-    }
-  };
+  const bookingUrl = getBookingUrl(isItaly);
 
   const whatsappMessage = isItaly
     ? 'Dzień dobry, pytam o wolny termin w obiekcie Il Dolce Tramonto Apartment na Sardynii'
@@ -30,14 +17,16 @@ export const StickyMobileBar: React.FC<StickyMobileBarProps> = ({ onOpenBooking 
 
   return (
     <aside className="ukoi-sticky-mobile-bar" aria-label="Pasek rezerwacji mobilnej">
-      <button 
-        type="button" 
-        className="btn-sage btn-mobile-book" 
-        onClick={triggerBooking}
+      <a 
+        href={bookingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`btn-sage btn-mobile-book ${isItaly ? 'btn-italy' : ''}`}
+        style={isItaly ? { backgroundColor: '#C2633C', borderColor: '#C2633C' } : undefined}
         data-booking-trigger="true"
       >
         ZAREZERWUJ ONLINE
-      </button>
+      </a>
       <a 
         href={`https://wa.me/48791040091?text=${encodeURIComponent(whatsappMessage)}`}
         target="_blank" 

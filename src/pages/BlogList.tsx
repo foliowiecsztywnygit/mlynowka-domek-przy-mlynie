@@ -93,9 +93,15 @@ export const BlogList: React.FC = () => {
             </p>
           </div>
           <div className="banner-actions-col">
-            <Link to="/#rezerwacja" className="btn-banner-phone" data-booking-trigger="true">
+            <a
+              href="https://booking.brosystems.pl/6b32dd5c8ba1bf9f?propId=367409"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-banner-phone"
+              data-booking-trigger="true"
+            >
               SPRAWDŹ DOSTĘPNOŚĆ
-            </Link>
+            </a>
             <a 
               href="https://wa.me/48791040091?text=Dzie%C5%84%20dobry%2C%20pytam%20o%20wolny%20termin%20w%20domku%20M%C5%82yn%C3%B3wka" 
               target="_blank" 

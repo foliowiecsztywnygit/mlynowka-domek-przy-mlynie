@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BookingBar } from '../components/BookingBar';
 import { PhotoGallery } from '../components/PhotoGallery';
+import { PIENINY_BOOKING_URL } from '../data/bookingLinks';
 import { MLYNOWKA_META, SITE_URL } from '../data/seoRoutes';
 import { applyPageMeta } from '../lib/seo';
 
@@ -9,7 +10,7 @@ interface HomeProps {
   onOpenBooking?: (data?: { checkIn?: string; checkOut?: string; property?: string }) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
+export const Home: React.FC<HomeProps> = () => {
   const location = useLocation();
   // Stan FAQ
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -21,19 +22,6 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
-  };
-
-  const handleBookingTrigger = (e?: React.MouseEvent) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    if (onOpenBooking) {
-      onOpenBooking();
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: { property: 'Młynówka — Domek przy Młynie' }
-      }));
-    }
   };
 
   return (
@@ -94,7 +82,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
           </p>
 
           {/* WIDŻET WYSZUKIWANIA 1:1 Z OBRAZKA UŻYTKOWNIKA Z INTERAKTYWNYM KALENDARZEM */}
-          <BookingBar onOpenBooking={handleBookingTrigger} />
+          <BookingBar property="pieniny" />
 
           <div className="hero-rating-subtle">
             <span className="rating-val">9,8 / 10</span>
@@ -110,9 +98,15 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
           
           <div className="sage-accent-line"></div>
           <div className="center-buttons-row">
-            <button type="button" className="btn-sage" onClick={handleBookingTrigger} data-booking-trigger="true">
+            <a
+              href={PIENINY_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sage"
+              data-booking-trigger="true"
+            >
               ZAREZERWUJ TERMIN
-            </button>
+            </a>
           </div>
 
           <h2 className="section-title">
@@ -359,9 +353,15 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
       <section className="ukoi-section" id="opinie">
         <div className="container">
           <div className="text-center">
-            <button type="button" className="btn-sage" onClick={handleBookingTrigger} data-booking-trigger="true">
+            <a
+              href={PIENINY_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sage"
+              data-booking-trigger="true"
+            >
               ZAREZERWUJ POBYT
-            </button>
+            </a>
           </div>
 
           <div className="reviews-split-layout">
@@ -454,7 +454,7 @@ export const Home: React.FC<HomeProps> = ({ onOpenBooking }) => {
           <p className="section-editorial-text">Gwarancja najniższej ceny bezpośrednio u gospodarzy Młynówki.</p>
 
           <div style={{ display: 'flex', justifyContent: 'center', margin: '24px 0' }}>
-            <BookingBar onOpenBooking={handleBookingTrigger} />
+            <BookingBar property="pieniny" />
           </div>
 
           <p className="booking-sub-note">

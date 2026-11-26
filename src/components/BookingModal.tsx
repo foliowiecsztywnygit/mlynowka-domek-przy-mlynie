@@ -1,4 +1,5 @@
 import React from 'react';
+import { getBookingUrl } from '../data/bookingLinks';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   if (!isOpen) return null;
 
   const isItaly = propertyName.includes('Dolce') || propertyName.includes('Sardyn') || propertyName.includes('Włochy');
+  const bookingUrl = getBookingUrl(isItaly, bookingData);
 
   const title = isItaly ? 'Il Dolce Tramonto — Dostępność i Rezerwacja' : 'Młynówka — Dostępność i Rezerwacja';
   const subtitle = isItaly 
@@ -60,18 +62,27 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
         <div className="modal-integration-info">
           <p>
-            <strong>Bezpośrednia rezerwacja bez prowizji:</strong> Skontaktuj się z nami bezpośrednio telefonicznie, przez WhatsApp lub e-mail (
+            <strong>Bezpośrednia rezerwacja bez prowizji:</strong> Zarezerwuj wybrany termin online lub skontaktuj się z nami telefonicznie, przez WhatsApp lub e-mail (
             <a
               href={`mailto:kontakt@pieniny-sardynia.pl?subject=${encodeURIComponent(title)}`}
               style={{ color: accentColor, fontWeight: 600 }}
             >
               kontakt@pieniny-sardynia.pl
             </a>
-            ), aby potwierdzić dostępność w najlepszej cenie:
+            ):
           </p>
         </div>
 
         <div className="modal-cta-buttons">
+          <a 
+            href={bookingUrl}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="btn-sage"
+            style={{ backgroundColor: accentColor, borderColor: accentColor }}
+          >
+            Zarezerwuj online
+          </a>
           <a 
             href="tel:+48791040091" 
             className="btn-sage"

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { BookingBar } from '../components/BookingBar';
 import { ItalyPhotoGallery } from '../components/ItalyPhotoGallery';
+import { ITALY_BOOKING_URL } from '../data/bookingLinks';
 import { ITALY_META, SITE_URL } from '../data/seoRoutes';
 import { applyPageMeta } from '../lib/seo';
 
@@ -9,7 +10,7 @@ interface ItalyHomeProps {
   onOpenBooking?: (data?: { checkIn?: string; checkOut?: string; property?: string }) => void;
 }
 
-export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
+export const ItalyHome: React.FC<ItalyHomeProps> = () => {
   const location = useLocation();
   // Stan aktywnego FAQ
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -21,19 +22,6 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
-  };
-
-  const handleBookingTrigger = (e?: React.MouseEvent) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    if (onOpenBooking) {
-      onOpenBooking({ property: 'Il Dolce Tramonto Apartment — Sardynia' });
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: { property: 'Il Dolce Tramonto Apartment — Sardynia' }
-      }));
-    }
   };
 
   const faqItems = [
@@ -127,7 +115,7 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
           </p>
 
           {/* WIDŻET WYSZUKIWANIA I REZERWACJI */}
-          <BookingBar onOpenBooking={handleBookingTrigger} />
+          <BookingBar property="italy" />
 
           <div className="hero-rating-subtle">
             <span className="rating-val" style={{ color: '#C2633C' }}>8,5 / 10</span>
@@ -143,9 +131,15 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
           
           <div className="sage-accent-line italy-accent-line"></div>
           <div className="center-buttons-row">
-            <button type="button" className="btn-sage btn-italy" onClick={handleBookingTrigger} data-booking-trigger="true">
+            <a
+              href={ITALY_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sage btn-italy"
+              data-booking-trigger="true"
+            >
               SPRAWDŹ TERMINY W SARDYNII
-            </button>
+            </a>
           </div>
 
           <h2 className="section-title">
@@ -622,14 +616,15 @@ export const ItalyHome: React.FC<ItalyHomeProps> = ({ onOpenBooking }) => {
           </p>
 
           <div className="center-buttons-row">
-            <button 
-              type="button" 
+            <a 
+              href={ITALY_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-sage btn-italy" 
-              onClick={handleBookingTrigger}
               data-booking-trigger="true"
             >
-              ZAPYTAJ O WOLNY TERMIN
-            </button>
+              ZAREZERWUJ ONLINE
+            </a>
             <a 
               href="https://wa.me/48791040091?text=Dzie%C5%84%20dobry%2C%20pytam%20o%20wolny%20termin%20w%20obiekcie%20Il%20Dolce%20Tramonto%20Apartment%20na%20Sardynii" 
               target="_blank" 

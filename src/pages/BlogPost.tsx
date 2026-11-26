@@ -10,7 +10,7 @@ interface BlogPostProps {
   onOpenBooking?: () => void;
 }
 
-export const BlogPost: React.FC<BlogPostProps> = ({ onOpenBooking }) => {
+export const BlogPost: React.FC<BlogPostProps> = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
@@ -72,17 +72,6 @@ export const BlogPost: React.FC<BlogPostProps> = ({ onOpenBooking }) => {
       };
     }
   }, [post]);
-
-  const handleBookingClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (onOpenBooking) {
-      onOpenBooking();
-    } else {
-      window.dispatchEvent(new CustomEvent('mlynowka:openBooking', {
-        detail: { property: 'Młynówka Domek przy Młynie' }
-      }));
-    }
-  };
 
   if (!post) {
     return (
@@ -160,14 +149,15 @@ export const BlogPost: React.FC<BlogPostProps> = ({ onOpenBooking }) => {
             </p>
 
             <div className="conversion-actions">
-              <button 
-                type="button" 
+              <a 
+                href="https://booking.brosystems.pl/6b32dd5c8ba1bf9f?propId=367409"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-sage btn-large" 
-                onClick={handleBookingClick}
                 data-booking-trigger="true"
               >
                 ZAREZERWUJ POBYT ONLINE
-              </button>
+              </a>
               
               <div className="conversion-quick-links">
                 <a href="tel:+48791040091" className="quick-contact-anchor">
